@@ -1,0 +1,32 @@
+
+#mainForm{
+ align-content: center;
+ text-align: center;
+ padding-left: 10%;
+ padding-top: 6%;
+ padding-right: 10%;
+}
+
+.button {
+    margin: 5px;
+    padding: 5px 5px 5px 20px; /* 20px makes room for your background image */
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    font-size: 3px;
+    font-family: sans-serif;
+}
+
+.buttons .apply {
+    background: #eee url(path/to/apply.png) no-repeat 0 50%;
+} 
+
+.panelGrid {
+    margin: 0 auto;
+}
+.panel {
+	margin: 0 auto;
+}
+.container {
+  display: flex;
+  justify-content: center;
+}
