@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+	<title>Desafio Pitang</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+</h:head>
+
+<h:body>
+
+	<h:form id="mainForm">
+	<p:growl id="message" showDetail="true" />
+		
+		<p:dialog id="dlg" widgetVar="dlg" modal="true">
+			<h:outputText value="Deseja Ir Para a Pagina Principal?"/>
+			<p:commandButton value="Sim"/>
+		</p:dialog>
+		<p:panel id="mainPanel" header="Bem Vindo Ao Desafio Da Pintag"
+			footer="Obrigado Pitang">
+			<p:messages id="messages" showDetail="false" closable="true">
+				<p:autoUpdate />
+			</p:messages>
+
+			<p:panelGrid columns="2" styleClass="panelGrid" rendered="true">
+				<p:outputLabel value="Nome*" for="nome" />
+				<p:inputText id="nome" value="#{cadastrarMB.usuario.nome}"
+					required="false" maxlength="30">
+					<p:keyFilter regEx="/[a-z ]/i" />
+				</p:inputText>
+
+				<p:outputLabel value="Digite seu Email*" for="email" />
+
+				<p:inputText id="email" value="#{cadastrarMB.usuario.email}"
+					required="false" maxlength="30">
+				</p:inputText>
+
+				<p:outputLabel value="Telefone Principal*" for="telefone" />
+				<p:inputMask id="telefone" placeholder="(99)999999999"  mask="(99)999999999"
+					
+					value="#{cadastrarMB.telefonePrincipal}">
+				</p:inputMask>
+
+				<p:outputLabel for="tipoPrincipal" value="Tipo*" />
+				<p:selectOneMenu id="tipoPrincipal"
+					value="#{cadastrarMB.tipoTelefonePrincipal}"
+					widgetVar="tipoPrincipal" style="width:125px">
+					<p:ajax event="change" update="tipoPrincipal" />
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItem itemLabel="Principal" itemValue="Principal" />
+					<f:selectItem itemLabel="Recado" itemValue="Recado" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Telefone Recado" for="numero" />
+				<p:inputMask id="numero" placeholder="(99)999999999" mask="(99)999999999"
+					value="#{cadastrarMB.telefoneRecado}">
+				</p:inputMask>
+
+				<p:outputLabel for="tipoRecado" value="Tipo" />
+				<p:selectOneMenu id="tipoRecado"
+					value="#{cadastrarMB.tipoTelefoneRecado}" widgetVar="gender"
+					style="width:125px">
+					<p:ajax event="change" update="tipoRecado" />
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItem itemLabel="Principal" itemValue="Principal" />
+					<f:selectItem itemLabel="Recado" itemValue="Recado" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Senha*" for="senha" />
+				<p:password id="senha" value="#{cadastrarMB.usuario.senha}"
+					required="false" maxlength="8">
+				</p:password>
+			</p:panelGrid>
+			<p:commandButton id="cadastrar" value="Cadastrar" styleClass="button"
+				action="#{cadastrarMB.cadastrar}" />	
+				<br/>
+			<p:commandLink id="link" action="#{cadastrarMB.voltar}" value="Voltar Para Página Principal"/>	
+			   	
+		</p:panel>
+
+	</h:form>
+</h:body>
+</html>
