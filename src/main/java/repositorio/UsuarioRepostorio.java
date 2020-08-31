@@ -25,6 +25,7 @@ public class UsuarioRepostorio extends BasicoAbstratoRepositorio<Usuario, Intege
 		if (em == null || !em.isOpen())
 			em = JpaUtil.getEntityManager();
 
+		setarEntidade(Usuario.class);
 		String query = ("select u from Usuario u ");
 		query+= (" where u.email = '"+email+"'");
 		query+= (" and u.senha = '"+ senha+"'");
