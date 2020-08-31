@@ -32,10 +32,10 @@
 				</p:inputText>
 				
 				<p:outputLabel value="Senha*" for="senha" />
-				<p:inputText id="senha"  value="#{loginMB.senha}"
+				<p:password id="senha"  value="#{loginMB.senha}"
 					required="false" maxlength="8">
 					 
-				</p:inputText>
+				</p:password>
 			</p:panelGrid>
 			
 			<p:commandButton id="login" value="Login" styleClass="button" action="#{loginMB.login}" />

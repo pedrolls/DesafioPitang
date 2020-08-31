@@ -53,7 +53,7 @@ public class UsuarioRepostorioTest {
 			// Assert
 			assertNotNull(listaDeUsuarios);
 		} catch (Exception e) {
-			fail("Erro ao testar o método de salvar! " + e.getMessage());
+			fail("Erro ao testar o método de listas todos! " + e.getMessage());
 		}
 	}
 
@@ -76,7 +76,7 @@ public class UsuarioRepostorioTest {
 			// Assert
 			assertEquals(repositorio.encontrar(Usuario.class, usuario.getId(), true).getNome(), usuario.getNome());
 		} catch (Exception e) {
-			fail("Erro ao testar o método de salvar! " + e.getMessage());
+			fail("Erro ao testar o método de Atualizar! " + e.getMessage());
 		}
 
 	}
@@ -97,7 +97,7 @@ public class UsuarioRepostorioTest {
 			// Assert
 			assertNotNull(repositorio.encontrar(Usuario.class, usuario.getId(), true));
 		} catch (Exception e) {
-			fail("Erro ao testar o método de salvar! " + e.getMessage());
+			fail("Erro ao testar o método de encontrar! " + e.getMessage());
 		}
 	}
 

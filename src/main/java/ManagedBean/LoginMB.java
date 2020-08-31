@@ -63,7 +63,7 @@ public class LoginMB extends Usuario{
 	 */
 	public boolean validarAtributosObrigatorios() {
 		boolean flag = true;
-		if(getEmail().isEmpty() && getSenha().isEmpty())
+		if(getEmail().isEmpty() || getSenha().isEmpty())
 			flag = false;
 		return flag;
 	}

@@ -23,23 +23,23 @@
 			<div>
 				<LABEL>Escolha uma Opção</LABEL>
 			</div>
-			<p:commandButton value="Cadastrar" styleClass="button"
+			<p:commandButton id="btnCadastrar" value="Cadastrar" styleClass="button"
 				action="#{principalMB.paginaCadastrar}">
 
 			</p:commandButton>
-			<p:commandButton value="Atualizar" styleClass="button"
+			<p:commandButton id="btnAtualizar" value="Atualizar" styleClass="button"
 				action="#{principalMB.paginaAtualizar}">
 
 			</p:commandButton>
 			<br />
-			<p:commandButton value="Listar Todos" styleClass="button"
+			<p:commandButton id="btnListar" value="Listar Todos" styleClass="button"
 				onclick="PF('table').show()"
 				action="#{principalMB.listaTodosUsuarios}">
 				
 				<p:ajax update="table" process="@this" resetValues="table"/>
 
 			</p:commandButton>
-			<p:commandButton value="Deletar" styleClass="button"
+			<p:commandButton id="btnDeletar" value="Deletar" styleClass="button"
 				action="#{principalMB.paginaDeletar}">
 
 			</p:commandButton>

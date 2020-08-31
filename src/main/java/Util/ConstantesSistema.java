@@ -25,6 +25,9 @@ public class ConstantesSistema {
 	public static final String PAGINA_CADASTRAR = "cadastrar.xhtml";
 	public static final String PAGINA_ATUALIZAR = "atualizar.xhtml";
 	public static final String PAGINA_DELETAR = "deletar.xhtml";
+	//ChromeDriver Para Testes
+	public static final String CHORME_DRIVER_WEB = "webdriver.chrome.driver";
+	public static final String CHROME_DRIVER = "chromedriver.exe";
 	
 	
 	
