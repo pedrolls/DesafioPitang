@@ -27,7 +27,7 @@
 				action="#{principalMB.paginaCadastrar}">
 
 			</p:commandButton>
-			<p:commandButton value="Update" styleClass="button"
+			<p:commandButton value="Atualizar" styleClass="button"
 				action="#{principalMB.paginaAtualizar}">
 
 			</p:commandButton>
@@ -40,11 +40,11 @@
 
 			</p:commandButton>
 			<p:commandButton value="Deletar" styleClass="button"
-				action="#{principalMB.paginaDeletear}">
+				action="#{principalMB.paginaDeletar}">
 
 			</p:commandButton>
 			<p:dataTable widgetVar="table" id="table"  
-				rendered="#{not empty principalMB.listaUsuarios}" var="list" value="#{principalMB.listaUsuarios}">
+				rendered="#{not empty principalMB.listaUsuarios}" var="list" value="#{principalMB.listaUsuarios}" emptyMessage="Nenhum Usuario Cadastrado!" >
 				<p:column headerText="Nome">
 					<h:outputText value="#{list.nome}" styleClass="colum"/>
 				</p:column>

@@ -21,11 +21,15 @@ public interface IFachada {
 	
 	public Telefone retornarObjetoPorString(String telefone, String tipo);
 	
-	public Usuario consultarUsuarioPorEmail(String email,String senha);
+	public Usuario consultarUsuarioPorEmailESenha(String email,String senha);
 	
 	public Usuario obterUsuarioPorEmail(String email);
 	
 	public List<Usuario> obterTodosUsuarios();
 	
 	public List<Telefone> listaTodosTelefones();
+	
+	public Usuario atualizar(Usuario usuario, boolean b);
+	
+	public void remover(Integer id, boolean b);
 }

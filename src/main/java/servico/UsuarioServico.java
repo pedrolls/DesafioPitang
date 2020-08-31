@@ -91,4 +91,27 @@ public class UsuarioServico {
 		else
 			return true;
 	}
+	
+	/**
+	 * Metodo generico para salvar/atualizar Entidades
+	 * 
+	 * @param entity
+	 * @param b      True, para fechar a transação do managerFactory, false para
+	 *               deixar aberto e fazer mais alterações
+	 * @return Objeto
+	 */
+	public Usuario atualizar(Usuario usuario, boolean b) {
+		return new UsuarioRepostorio().atualizar(usuario, b);
+	}
+	
+	/**
+	 * @param entity Passa a Classe do tipo do objeto
+	 * @param id     Int com o id do objeto.
+	 * @param b      True, para fechar a transação do managerFactory, false para
+	 *               deixar aberto e fazer mais alterações
+	 * @return Objeto
+	 */
+	public void remover(Class<Usuario> entity, Integer id, boolean b) {
+		new UsuarioRepostorio().remover(Usuario.class, id, b);
+	}
 }

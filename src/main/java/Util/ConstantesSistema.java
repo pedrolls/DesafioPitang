@@ -7,6 +7,7 @@ public class ConstantesSistema {
 	public static final String USUARIO_NAO_ENCONTRADO = "Usuario Não Encontrado!";
 	public static final String USUARIO_JA_CADASTRADO = "Usuario Já Cadastrado!";
 	public static final String VERIFIQUE_OS_CAMPOS_OBRIGATORIOS = "Verifique Os Campos Obrigatórios!";
+	public static final String USUARIO_ATUALIZADO_SUCESSO = "Usuario Atualizado Com Sucesso!";
 	public static final String TELEFONE_OBRIGATORIO = "Informe Pelo Menos Um Telefone!";
 	public static final String TIPO_TELEFONE_PRINCIPAL_OBRIGATORIO = "Selecione O Tipo Do Telefone Principal!";
 	public static final String TIPO_TELEFONE_RECADO_OBRIGATORIO = "Selecione O Tipo Do Telefone Recado!";
@@ -14,12 +15,19 @@ public class ConstantesSistema {
 	public static final String USUARIO_CADASTRADO_SUCESSO = "Usuario Cadastrado Com Sucesso!";
 	public static final String VOCE_SERA_REDIRECIONADO = "Você Será Redirecionado!";
 	public static final String FACA_CADASTRO_PRIMEIRO = "Faça Seu Cadastro Primeiro!";
+	public static final String VERIFIQUE_EMAIL_SENHA = "Verifique Se o Email e Senha Estão Corretos";
+	public static final String USUARIO_REMOVIDO_SUCESSO = "Usuario Removido Com Sucesso";
 	
 	//pages
 	public static final String PAGINA_PRINCIPAL = "principal.xhtml";
 	public static final String PAGINA_NOVO_CADASTRO = "novoCadastro.xhtml";
 	public static final String PAGINA_LOGIN = "login.xhtml";
-	public static final String CADASTRAR = "cadastrar.xhtml";
+	public static final String PAGINA_CADASTRAR = "cadastrar.xhtml";
+	public static final String PAGINA_ATUALIZAR = "atualizar.xhtml";
+	public static final String PAGINA_DELETAR = "deletar.xhtml";
+	
+	
+	
 	
 	
 	

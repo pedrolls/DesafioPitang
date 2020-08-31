@@ -78,7 +78,7 @@ public class Fachada implements IFachada{
 	 * @param senha
 	 * @return Usuario
 	 */
-	public Usuario consultarUsuarioPorEmail(String email,String senha) {
+	public Usuario consultarUsuarioPorEmailESenha(String email,String senha) {
 		return new UsuarioServico().consultarUsuarioPorEmail(email, senha);
 	}
 	
@@ -105,5 +105,28 @@ public class Fachada implements IFachada{
 	 */
 	public List<Telefone> listaTodosTelefones(){
 		return new TelefoneServico().listaTodosTelefones();
+	}
+	
+	/**
+	 * Metodo generico para salvar/atualizar Entidades
+	 * 
+	 * @param entity
+	 * @param b      True, para fechar a transação do managerFactory, false para
+	 *               deixar aberto e fazer mais alterações
+	 * @return Objeto
+	 */
+	public Usuario atualizar(Usuario usuario, boolean b) {
+		return new UsuarioServico().atualizar(usuario, b);
+	}
+	
+	/**
+	 * @param entity Passa a Classe do tipo do objeto
+	 * @param id     Int com o id do objeto.
+	 * @param b      True, para fechar a transação do managerFactory, false para
+	 *               deixar aberto e fazer mais alterações
+	 * @return Objeto
+	 */
+	public void remover(Integer id, boolean b) {
+		new UsuarioServico().remover(Usuario.class, id, b);
 	}
 }

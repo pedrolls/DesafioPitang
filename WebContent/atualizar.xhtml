@@ -28,26 +28,26 @@
 
 			<p:panelGrid columns="2" styleClass="panelGrid" rendered="true">
 				<p:outputLabel value="Nome*" for="nome" />
-				<p:inputText id="nome" value="#{cadastrarMB.usuario.nome}"
+				<p:inputText id="nome" value="#{atualizarMB.nome}"
 					required="false" maxlength="30">
 					<p:keyFilter regEx="/[a-z ]/i" />
 				</p:inputText>
 
 				<p:outputLabel value="Digite seu Email*" for="email" />
 
-				<p:inputText id="email" value="#{cadastrarMB.usuario.email}"
+				<p:inputText id="email" value="#{atualizarMB.email}"
 					required="false" maxlength="30">
 				</p:inputText>
 
 				<p:outputLabel value="Telefone Principal*" for="telefone" />
 				<p:inputMask id="telefone" placeholder="(99)999999999"  mask="(99)999999999"
 					
-					value="#{cadastrarMB.telefonePrincipal}">
+					value="#{atualizarMB.telefonePrincipal}">
 				</p:inputMask>
 
 				<p:outputLabel for="tipoPrincipal" value="Tipo*" />
 				<p:selectOneMenu id="tipoPrincipal"
-					value="#{cadastrarMB.tipoTelefonePrincipal}"
+					value="#{atualizarMB.tipoTelefonePrincipal}"
 					widgetVar="tipoPrincipal" style="width:125px">
 					<p:ajax event="change" update="tipoPrincipal" />
 					<f:selectItem itemLabel="Selecione" itemValue="" />
@@ -57,12 +57,12 @@
 
 				<p:outputLabel value="Telefone Recado" for="numero" />
 				<p:inputMask id="numero" placeholder="(99)999999999" mask="(99)999999999"
-					value="#{cadastrarMB.telefoneRecado}">
+					value="#{atualizarMB.telefoneRecado}">
 				</p:inputMask>
 
 				<p:outputLabel for="tipoRecado" value="Tipo" />
 				<p:selectOneMenu id="tipoRecado"
-					value="#{cadastrarMB.tipoTelefoneRecado}" widgetVar="gender"
+					value="#{atualizarMB.tipoTelefoneRecado}" widgetVar="gender"
 					style="width:125px">
 					<p:ajax event="change" update="tipoRecado" />
 					<f:selectItem itemLabel="Selecione" itemValue="" />
@@ -71,14 +71,14 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Senha*" for="senha" />
-				<p:password id="senha" value="#{cadastrarMB.usuario.senha}"
+				<p:password id="senha" value="#{atualizarMB.senha}"
 					required="false" maxlength="8">
 				</p:password>
 			</p:panelGrid>
-			<p:commandButton id="cadastrar" value="Cadastrar" styleClass="button"
-				action="#{cadastrarMB.cadastrar}" />	
+			<p:commandButton id="atualizar" value="Atualizar" styleClass="button"
+				action="#{atualizarMB.atualizar}" />	
 				<br/>
-			<p:commandLink id="link" action="#{cadastrarMB.paginaDeLogin}" value="Fazer Login"/>	
+			<p:commandLink id="link" action="#{atualizarMB.voltar}" value="Voltar Para Página Principal"/>	
 			   	
 		</p:panel>
 

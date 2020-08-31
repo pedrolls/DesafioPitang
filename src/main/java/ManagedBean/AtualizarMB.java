@@ -1,7 +1,6 @@
 package ManagedBean;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,53 +9,65 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 
 import Util.ConstantesSistema;
 import excecao.UsuarioException;
 import fachada.Fachada;
 import model.Telefone;
 import model.Usuario;
+import repositorio.UsuarioRepostorio;
 
-@ManagedBean(name = "cadastrarMB")
+@ManagedBean(name = "atualizarMB")
 @ViewScoped
-public class CadastrarMB implements Serializable {
+public class AtualizarMB extends Usuario{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private Usuario usuario;
-	private Telefone telefone;
+	
+	Usuario objUsuario = new Usuario();
 	private List<Telefone> listaDeTelefones;
 	private String telefonePrincipal;
 	private String telefoneRecado;
 	private String tipoTelefonePrincipal;
 	private String tipoTelefoneRecado;
-
+	
 	@PostConstruct
 	public void init() {
-		usuario = new Usuario();
-		telefone = new Telefone();
 		listaDeTelefones = new ArrayList<Telefone>();
 	}
-
-	public void cadastrar() {
+	
+	
+	public void atualizar() {
+		
 		try {
-			validarCadastrar();
+			if(!getEmail().isEmpty() && !getSenha().isEmpty()) {
+				new UsuarioRepostorio().setarEntidade(Usuario.class);
+				objUsuario = Fachada.getInstancia().consultarUsuarioPorEmailESenha(getEmail(), getSenha());
+			}				
+			if(objUsuario == null)
+				throw new UsuarioException(ConstantesSistema.VERIFIQUE_EMAIL_SENHA);
+			validarAtualizar();
+			objUsuario.setNome(getNome());
+			objUsuario.setSenha(getSenha());
+			Fachada.getInstancia().atualizar(objUsuario, true);
 		} catch (UsuarioException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), e.getMessage()));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage()));
+		} catch (NoResultException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, ConstantesSistema.VERIFIQUE_EMAIL_SENHA, ConstantesSistema.USUARIO_NAO_ENCONTRADO));
 		}
 	}
-
-	public void validarCadastrar() {
+	/**
+	 * Meotodo que valida os dados antes de atualizar
+	 */
+	public void validarAtualizar() {
 		try {
-			if (usuario.getNome().isEmpty() || usuario.getEmail().isEmpty() || usuario.getSenha().isEmpty())
+			if (getNome().isEmpty() || getEmail().isEmpty() || getSenha().isEmpty())
 				throw new UsuarioException(ConstantesSistema.VERIFIQUE_OS_CAMPOS_OBRIGATORIOS);
-			if (Fachada.getInstancia().obterUsuarioPorEmail(usuario.getEmail()) != null) {
-				throw new UsuarioException(ConstantesSistema.USUARIO_JA_CADASTRADO);
-			}
 			if (telefonePrincipal.isEmpty() && telefoneRecado.isEmpty())
 				throw new UsuarioException(ConstantesSistema.TELEFONE_OBRIGATORIO);
 			if (!telefonePrincipal.isEmpty() && tipoTelefonePrincipal.isEmpty())
@@ -68,22 +79,40 @@ public class CadastrarMB implements Serializable {
 			if (telefoneRecado.isEmpty() && !tipoTelefoneRecado.isEmpty())
 				throw new UsuarioException(ConstantesSistema.VERIFIQUE_O_TIPO_DO_TELEFONE_PREENCHIDO);
 			atualizarListaDeTelefones();
-			for(int i = 0;i<listaDeTelefones.size();i++) {
-				listaDeTelefones.get(i).setUsuario(usuario);
+			//Aqui recupeo os IDs dos telefones a serem atualizados
+			for(int x=0;x<objUsuario.getTelefone().size();) {
+				if(objUsuario.getTelefone().size()>1) {
+					listaDeTelefones.get(0).setId(objUsuario.getTelefone().get(x).getId());
+					listaDeTelefones.get(1).setId(objUsuario.getTelefone().get(x+1).getId());
+					break;
+				}else {
+					listaDeTelefones.get(0).setId(objUsuario.getTelefone().get(x).getId());
+					break;
+				}					
 			}
-			usuario.setTelefone(listaDeTelefones);
+			//Aqui seto o usuario no telefone
+			for(int i = 0;i<listaDeTelefones.size();i++) {
+				listaDeTelefones.get(i).setUsuario(objUsuario);
+			}
+			//Aqui seto o telefone no usuario
+			objUsuario.setTelefone(listaDeTelefones);
 			
-			if (Fachada.getInstancia().validarCadastrarUsuario(usuario) == false)
+			if (Fachada.getInstancia().validarCadastrarUsuario(objUsuario) == false)
 				throw new UsuarioException(ConstantesSistema.VERIFIQUE_OS_CAMPOS_OBRIGATORIOS);
-			Fachada.getInstancia().cadastrarUsuario(usuario);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					ConstantesSistema.USUARIO_CADASTRADO_SUCESSO, null));
+			Fachada.getInstancia().cadastrarUsuario(objUsuario);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, ConstantesSistema.USUARIO_ATUALIZADO_SUCESSO, null));
 		} catch (UsuarioException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), e.getMessage()));
 		}
 	}
-
+	
+	/**
+	 * Metodo que recebe a Sting completa com o telefone e retorna um obj preenchido
+	 * @param telefone
+	 * @return Telefone
+	 */
 	public void atualizarListaDeTelefones() {
 		if (!telefonePrincipal.isEmpty())
 			listaDeTelefones
@@ -92,29 +121,6 @@ public class CadastrarMB implements Serializable {
 			listaDeTelefones.add(Fachada.getInstancia().retornarObjetoPorString(telefoneRecado, tipoTelefoneRecado));
 
 	}
-
-	public void paginaPrincipal() {
-		try {
-			if (usuario.getId() != 0)
-				FacesContext.getCurrentInstance().getExternalContext().redirect(ConstantesSistema.PAGINA_PRINCIPAL);
-			else
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesSistema.FACA_CADASTRO_PRIMEIRO, null));
-		} catch (IOException e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					ConstantesSistema.ERRO_AO_REDIRECIONAR, e.getMessage()));
-		}
-	}
-
-	public void paginaDeLogin() {
-		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect(ConstantesSistema.PAGINA_LOGIN);
-		} catch (IOException e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					ConstantesSistema.ERRO_AO_REDIRECIONAR, e.getMessage()));
-		}
-	}
-	
 	/**
 	 * Volta para a pag inicial
 	 */
@@ -127,20 +133,12 @@ public class CadastrarMB implements Serializable {
 		}
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public List<Telefone> getListaDeTelefones() {
+		return listaDeTelefones;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Telefone getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(Telefone telefone) {
-		this.telefone = telefone;
+	public void setListaDeTelefones(List<Telefone> listaDeTelefones) {
+		this.listaDeTelefones = listaDeTelefones;
 	}
 
 	public String getTelefonePrincipal() {
@@ -159,14 +157,6 @@ public class CadastrarMB implements Serializable {
 		this.telefoneRecado = telefoneRecado;
 	}
 
-	public List<Telefone> getListaDeTelefones() {
-		return listaDeTelefones;
-	}
-
-	public void setListaDeTelefones(List<Telefone> listaDeTelefones) {
-		this.listaDeTelefones = listaDeTelefones;
-	}
-
 	public String getTipoTelefonePrincipal() {
 		return tipoTelefonePrincipal;
 	}
@@ -182,4 +172,5 @@ public class CadastrarMB implements Serializable {
 	public void setTipoTelefoneRecado(String tipoTelefoneRecado) {
 		this.tipoTelefoneRecado = tipoTelefoneRecado;
 	}
+
 }

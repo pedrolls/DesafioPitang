@@ -53,7 +53,31 @@ public class PrincipalMB extends Usuario {
 	 */
 	public void paginaCadastrar() {
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect(ConstantesSistema.CADASTRAR);
+			FacesContext.getCurrentInstance().getExternalContext().redirect(ConstantesSistema.PAGINA_CADASTRAR);
+		} catch (IOException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesSistema.ERRO_AO_REDIRECIONAR, e.getMessage()));
+		}
+	}
+	
+	/**
+	 * Redireciona para Atualizar
+	 */
+	public void paginaAtualizar() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(ConstantesSistema.PAGINA_ATUALIZAR);
+		} catch (IOException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesSistema.ERRO_AO_REDIRECIONAR, e.getMessage()));
+		}
+	}
+	
+	/**
+	 * Redireciona para Deletar
+	 */
+	public void paginaDeletar() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(ConstantesSistema.PAGINA_DELETAR);
 		} catch (IOException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesSistema.ERRO_AO_REDIRECIONAR, e.getMessage()));

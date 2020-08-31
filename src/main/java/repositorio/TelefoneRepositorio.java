@@ -37,7 +37,6 @@ public class TelefoneRepositorio extends BasicoAbstratoRepositorio<Telefone, Int
 		}finally {
 			em.close();
 		}
-		
 		return listaDeTelefones;
 	}
 
