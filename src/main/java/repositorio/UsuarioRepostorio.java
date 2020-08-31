@@ -42,17 +42,40 @@ public class UsuarioRepostorio extends BasicoAbstratoRepositorio<Usuario, Intege
 	}
 	
 	/**
-	 * Metodo personalizado que retorna todos os usuarios 
-	 * @return List<Usuario>
+	 * Metodo que retorna um usuario locanzando pelo email
+	 * @param email
+	 * @return Usuario
 	 */
-	public List<Usuario> obterTodosUsuario() {
-		List<Usuario> lista = new ArrayList<Usuario>();
+	public Usuario obterUsuarioPorEmail(String email) {
+		Usuario objetoUsuario = new Usuario();
 		if (em == null || !em.isOpen())
 			em = JpaUtil.getEntityManager();
 
 		String query = ("select u from Usuario u ");
-		query+= (" join fetch u.telefone t ");
+		query+= (" where u.email = '"+email+"'");
 
+		try {
+			em.getTransaction().begin();
+			TypedQuery<Usuario> typedQuery = em.createQuery(query, Usuario.class);
+			objetoUsuario = typedQuery.getSingleResult();			
+		} catch (NoResultException e) {
+			objetoUsuario = null;
+		}finally {
+			em.close();
+		}
+		return objetoUsuario;		
+	}
+	/**
+	 * Metodo personalizado que retorna todos os usuarios 
+	 * @return List<Usuario>
+	 */
+	public List<Usuario> obterTodosUsuarios() {
+		List<Usuario> lista = new ArrayList<Usuario>();
+		if (em == null || !em.isOpen())
+			em = JpaUtil.getEntityManager();
+
+		String query = ("select distinct u from Usuario u "
+				+ " join  fetch u.telefone");
 		try {
 			em.getTransaction().begin();
 			TypedQuery<Usuario> typedQuery = em.createQuery(query, Usuario.class);

@@ -41,11 +41,10 @@ public class LoginMB extends Usuario{
 			 if(!validarAtributosObrigatorios())
 				 throw new UsuarioException(ConstantesSistema.VERIFIQUE_OS_CAMPOS_OBRIGATORIOS);
 			if(Fachada.getInstancia().login(getEmail(), getSenha())!=null)
+					//Aqui redireciono para a página principal.
 					FacesContext.getCurrentInstance().getExternalContext().redirect(ConstantesSistema.PAGINA_PRINCIPAL);
 			else
-				throw new NoResultException();
-					
-			 
+				throw new NoResultException();			 
 		}catch (UsuarioException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), e.getMessage()));
@@ -76,6 +75,18 @@ public class LoginMB extends Usuario{
 		FacesMessage message = Fachada.getInstancia().validateEmail(getEmail());
 		
 		return message;
+	}
+	
+	/**
+	 * Metodo que faz o redirecionamento para a página de cadastro
+	 */
+	public void novoCadastro() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(ConstantesSistema.PAGINA_NOVO_CADASTRO);
+		} catch (IOException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, ConstantesSistema.ERRO_AO_REDIRECIONAR, e.getMessage()));
+		}
 	}
 	
 	public Usuario getUsuarioBean() {

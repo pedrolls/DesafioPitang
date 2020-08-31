@@ -16,7 +16,7 @@
 	<h:form id="mainForm" >
 	
 		<p:panel id="mainPanel" header="Bem Vindo Ao Desafio Da Pintag"
-			footer="Obrigado Pitang">
+			footer="Obrigado Pitang!">
 			<p:messages id="messages" showDetail="false" closable="true">
 				<p:autoUpdate />
 			</p:messages>
@@ -40,6 +40,7 @@
 			
 			<p:commandButton id="login" value="Login" styleClass="button" action="#{loginMB.login}" />
 			<br/>
+			<p:commandLink id="link" value="Novo Cadastro" action="#{loginMB.novoCadastro}"/>
 		
 		</p:panel>
 			

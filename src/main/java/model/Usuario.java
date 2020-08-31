@@ -26,7 +26,7 @@ public class Usuario implements IBaseClass {
 	@Column(name = "nome", nullable = false)
 	private String nome;
 	
-	@Column(name = "email", nullable = false)
+	@Column(name = "email", nullable = false,unique = true)
 	private String email;
 	
 	@Column(name = "senha", nullable = false)
@@ -84,7 +84,7 @@ public class Usuario implements IBaseClass {
 		return telefone;
 	}
 
-	public void setTelefone(List<Telefone>	 telefone) {
+	public void setTelefone(List<Telefone> telefone) {
 		this.telefone = telefone;
 	}
 
